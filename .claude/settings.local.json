@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(npm cache clean:*)",
+      "Bash(sudo chown:*)",
+      "Bash(npm config set cache:*)",
+      "Bash(npm run pack)",
+      "Bash(npm uninstall:*)",
+      "Bash(timeout 5 npm run dev)",
+      "Bash(npm run build)",
+      "Bash(ls:*)",
+      "Bash(open:*)",
+      "Bash(pkill:*)",
+      "Bash(python3 -c:*)",
+      "Bash(npx icon-gen:*)"
+    ]
+  }
+}

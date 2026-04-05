@@ -1,0 +1,38 @@
+{
+  "name": "simple-clipboard",
+  "version": "1.0.0",
+  "description": "A modern clipboard manager for macOS",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --enable-logging",
+    "build": "electron-builder --mac",
+    "pack": "electron-builder --dir"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^41.1.1",
+    "electron-builder": "^26.8.1",
+    "icon-gen": "^5.0.0"
+  },
+  "dependencies": {
+    "electron-log": "^5.4.3",
+    "electron-store": "^8.2.0"
+  },
+  "build": {
+    "appId": "com.simpleclipboard.app",
+    "productName": "SimpleClipboard",
+    "icon": "assets/app.icns",
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*"
+    ]
+  }
+}
