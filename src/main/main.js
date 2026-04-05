@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, clipboard } = require('electron');
+const { app, BrowserWindow, ipcMain, clipboard, Tray, Menu, nativeImage } = require('electron');
 const path = require('path');
 const Store = require('electron-store');
 const log = require('electron-log');
@@ -29,6 +29,7 @@ app.on('before-quit', () => {
 });
 
 let mainWindow = null;
+let tray = null;
 let clipboardWatcher = null;
 let lastClipboardContent = '';
 let lastClipboardImage = '';
@@ -63,6 +64,25 @@ function createWindow() {
   });
 
   log.info('Main window created');
+}
+
+// Create system tray icon
+function createTray() {
+  // Use the app icon for the tray
+  const trayIcon = nativeImage.createFromPath(path.join(__dirname, '../../assets/tray_icon.png'));
+
+  tray = new Tray(trayIcon);
+  tray.setToolTip('SimpleClipboard');
+
+  // Click on tray icon to show window
+  tray.on('click', () => {
+    if (mainWindow) {
+      mainWindow.show();
+      mainWindow.focus();
+    }
+  });
+
+  log.info('System tray created');
 }
 
 // Start monitoring clipboard
@@ -271,6 +291,7 @@ ipcMain.handle('open-storage-folder', () => {
 app.whenReady().then(() => {
   log.info('App is ready');
   createWindow();
+  createTray();
   startClipboardWatcher();
 
   if (mainWindow) {

@@ -15,7 +15,9 @@
       "Bash(open:*)",
       "Bash(pkill:*)",
       "Bash(python3 -c:*)",
-      "Bash(npx icon-gen:*)"
+      "Bash(npx icon-gen:*)",
+      "Bash(pip3:*)",
+      "Bash(find:*)"
     ]
   }
 }

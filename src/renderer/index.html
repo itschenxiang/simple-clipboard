@@ -587,12 +587,36 @@
       -webkit-user-select: text;
     }
 
+    .preview-text > div {
+      padding: 12px;
+      border-radius: 8px;
+      margin: 4px 0;
+      min-height: 80px;
+    }
+
     .preview-text img {
       max-width: 100%;
       height: auto;
       border-radius: 6px;
       display: block;
       cursor: default;
+    }
+
+    .preview-text > .text-content {
+      background: #f8f8f8;
+      border: 1px solid var(--border);
+    }
+
+    .preview-text > .url-content {
+      background: #f8f8f8;
+      border: 1px solid var(--border);
+    }
+
+    .preview-text > .code-content {
+      background: #f8f8fa;
+      border: 1px solid #e8e8ed;
+      font-family: 'SF Mono', 'Menlo', monospace;
+      font-size: 12px;
     }
 
     .preview-empty {

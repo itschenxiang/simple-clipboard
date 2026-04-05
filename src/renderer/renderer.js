@@ -261,7 +261,7 @@ function updatePreview() {
   if (selectedClip.type === 'image') {
     previewText.innerHTML = `<img src="${selectedClip.content}" class="preview-full-image">`;
   } else {
-    previewText.textContent = selectedClip.content;
+    previewText.innerHTML = `<div class="preview-text ${selectedClip.type}-content">${escapeHtml(selectedClip.content)}</div>`;
   }
 
   if (selectedClip.pinned) {
