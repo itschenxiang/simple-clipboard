@@ -1,4 +1,4 @@
-# ClipVault
+# SimpleClipboard
 
 A modern clipboard manager for macOS with a clean, intuitive interface inspired by WeChat Input Method.
 
@@ -106,8 +106,9 @@ npm run pack
 
 Built applications are placed in:
 ```
-dist/mac/ClipVault.app
-dist/mac/ClipVault-1.0.0.dmg  (if packaged)
+dist/SimpleClipboard-1.0.0-arm64.dmg  (DMG installer)
+dist/SimpleClipboard-1.0.0-arm64-mac.zip  (ZIP archive)
+dist/mac-arm64/SimpleClipboard.app  (Application bundle)
 ```
 
 ## License
