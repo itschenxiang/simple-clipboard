@@ -327,17 +327,16 @@
       border-color: #c7c7cc;
     }
 
-    .clipboard-item.selected {
-      border-color: var(--accent);
-      border-left: 3px solid var(--accent);
-      background: linear-gradient(135deg, #e6f2ff 0%, #cce4ff 100%);
-      box-shadow: 0 3px 10px rgba(0, 122, 255, 0.2), 0 1px 3px rgba(0, 122, 255, 0.1);
-      transform: translateY(-1px);
+    .clipboard-item.pinned {
+      border-left: 3px solid var(--text-tertiary);
+      background: linear-gradient(135deg, rgba(142, 142, 147, 0.30) 0%, rgba(142, 142, 147, 0.18) 100%);
     }
 
-    .clipboard-item.pinned {
-      border-left: 3px solid var(--accent);
-      background: #f0f7ff;
+    .clipboard-item.selected {
+      border-color: #b3d9ff;
+      border-left: 4px solid var(--accent);
+      background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
+      box-shadow: 0 2px 8px rgba(0, 122, 255, 0.12);
     }
 
     .item-header {
@@ -530,7 +529,7 @@
 
     .item-action-btn.pin-btn:hover,
     .item-action-btn.pinned {
-      color: var(--warning);
+      color: var(--accent);
     }
 
     .item-action-btn.copy-btn:hover {
@@ -541,8 +540,20 @@
       color: var(--accent);
     }
 
-    .item-action-btn.delete-btn:hover {
+    .item-action-btn.delete-btn {
       color: var(--danger);
+    }
+
+    .item-action-btn.delete-btn:hover {
+      color: #ff3b30;
+    }
+
+    .clipboard-item.pinned .item-action-btn.delete-btn {
+      color: var(--danger);
+    }
+
+    .clipboard-item.pinned .item-action-btn.delete-btn:hover {
+      color: #ff3b30;
     }
 
     .item-action-btn svg {
@@ -684,8 +695,8 @@
     }
 
     .preview-btn svg {
-      width: 12px;
-      height: 12px;
+      width: 18px;
+      height: 18px;
     }
 
     /* Empty State */
@@ -720,6 +731,26 @@
       opacity: 0;
       transition: all 0.25s ease;
       z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toast-icon {
+      width: 18px;
+      height: 18px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .toast-icon svg {
+      width: 12px;
+      height: 12px;
+      color: #fff;
     }
 
     .toast.show {
@@ -1125,14 +1156,12 @@
             <path d="M12 2a4 4 0 0 0-4 4v6l-3 3v1h14v-1l-3-3V6a4 4 0 0 0-4-4z"/>
             <circle cx="12" cy="6" r="1"/>
           </svg>
-          Pin
         </button>
         <button class="preview-btn primary" id="previewCopy">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
           </svg>
-          Copy
         </button>
       </div>
     </div>

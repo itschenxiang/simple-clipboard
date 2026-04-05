@@ -17,7 +17,9 @@
       "Bash(python3 -c:*)",
       "Bash(npx icon-gen:*)",
       "Bash(pip3:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(npm run dev)",
+      "Bash(npm start)"
     ]
   }
 }

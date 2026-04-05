@@ -56,7 +56,7 @@ function getTypeIcon(type) {
 
 // Show toast notification
 function showToast(message) {
-  toast.textContent = message;
+  toast.innerHTML = `<span class="toast-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span><span>${message}</span>`;
   toast.classList.add('show');
   setTimeout(() => {
     toast.classList.remove('show');
@@ -137,7 +137,7 @@ function renderClips() {
           </button>
           ` : ''}
           <button class="item-action-btn ${clip.pinned ? 'pinned' : 'pin-btn'}" data-action="pin" data-id="${clip.id}" title="${clip.pinned ? 'Unpin' : 'Pin'}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg viewBox="0 0 24 24" fill="${clip.pinned ? '#007AFF' : 'none'}" stroke="${clip.pinned ? '#007AFF' : 'currentColor'}" stroke-width="2">
               <path d="M12 17v5"/>
               <path d="M12 2a4 4 0 0 0-4 4v6l-3 3v1h14v-1l-3-3V6a4 4 0 0 0-4-4z"/>
               <circle cx="12" cy="6" r="1"/>
@@ -288,13 +288,11 @@ function updatePreview() {
 
   if (selectedClip.pinned) {
     previewPin.innerHTML = `
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <svg viewBox="0 0 24 24" fill="#007AFF" stroke="#007AFF" stroke-width="2">
         <path d="M12 17v5"/>
         <path d="M12 2a4 4 0 0 0-4 4v6l-3 3v1h14v-1l-3-3V6a4 4 0 0 0-4-4z"/>
         <circle cx="12" cy="6" r="1"/>
-      </svg>
-      Pinned
-    `;
+      </svg>`;
     previewPin.classList.add('pinned');
   } else {
     previewPin.innerHTML = `
@@ -302,9 +300,7 @@ function updatePreview() {
         <path d="M12 17v5"/>
         <path d="M12 2a4 4 0 0 0-4 4v6l-3 3v1h14v-1l-3-3V6a4 4 0 0 0-4-4z"/>
         <circle cx="12" cy="6" r="1"/>
-      </svg>
-      Pin
-    `;
+      </svg>`;
     previewPin.classList.remove('pinned');
   }
 }
