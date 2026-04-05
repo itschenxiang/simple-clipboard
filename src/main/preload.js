@@ -40,5 +40,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getStoragePath: () => ipcRenderer.invoke('get-storage-path'),
 
   // Open storage folder
-  openStorageFolder: () => ipcRenderer.invoke('open-storage-folder')
+  openStorageFolder: () => ipcRenderer.invoke('open-storage-folder'),
+
+  // Open link in browser
+  openLink: (url) => ipcRenderer.invoke('open-link', url)
 });

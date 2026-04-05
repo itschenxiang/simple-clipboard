@@ -127,10 +127,20 @@ function renderClips() {
           <button class="tag-add-btn" data-action="add-tag" data-id="${clip.id}" title="Add tag">+</button>
         </div>
         <div class="item-actions">
+          ${clip.type === 'url' ? `
+          <button class="item-action-btn open-btn" data-action="open" data-id="${clip.id}" title="Open Link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </button>
+          ` : ''}
           <button class="item-action-btn ${clip.pinned ? 'pinned' : 'pin-btn'}" data-action="pin" data-id="${clip.id}" title="${clip.pinned ? 'Unpin' : 'Pin'}">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 2L12 22"/>
-              <path d="M5 12l7-7 7 7"/>
+              <path d="M12 17v5"/>
+              <path d="M12 2a4 4 0 0 0-4 4v6l-3 3v1h14v-1l-3-3V6a4 4 0 0 0-4-4z"/>
+              <circle cx="12" cy="6" r="1"/>
             </svg>
           </button>
           <button class="item-action-btn copy-btn" data-action="copy" data-id="${clip.id}" title="Copy">
@@ -164,6 +174,16 @@ function renderClips() {
       const clip = clips.find(c => c.id === id);
       selectClip(clip);
     });
+
+    item.addEventListener('dblclick', (e) => {
+      // Don't copy if clicking on action buttons or tags
+      if (e.target.closest('.item-action-btn') || e.target.closest('.item-tags')) {
+        return;
+      }
+
+      const id = item.dataset.id;
+      handleCopy(id);
+    });
   });
 
   document.querySelectorAll('.item-action-btn').forEach(btn => {
@@ -180,6 +200,8 @@ function renderClips() {
         await handleDelete(id);
       } else if (action === 'add-tag') {
         await handleAddTag(id);
+      } else if (action === 'open') {
+        await handleOpenLink(id);
       }
     });
   });
@@ -267,8 +289,9 @@ function updatePreview() {
   if (selectedClip.pinned) {
     previewPin.innerHTML = `
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 2L12 22"/>
-        <path d="M5 12l7-7 7 7"/>
+        <path d="M12 17v5"/>
+        <path d="M12 2a4 4 0 0 0-4 4v6l-3 3v1h14v-1l-3-3V6a4 4 0 0 0-4-4z"/>
+        <circle cx="12" cy="6" r="1"/>
       </svg>
       Pinned
     `;
@@ -276,8 +299,9 @@ function updatePreview() {
   } else {
     previewPin.innerHTML = `
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 2L12 22"/>
-        <path d="M5 12l7-7 7 7"/>
+        <path d="M12 17v5"/>
+        <path d="M12 2a4 4 0 0 0-4 4v6l-3 3v1h14v-1l-3-3V6a4 4 0 0 0-4-4z"/>
+        <circle cx="12" cy="6" r="1"/>
       </svg>
       Pin
     `;
@@ -303,6 +327,14 @@ async function handleCopy(id) {
   if (clip) {
     await window.electronAPI.copyClip(clip.content);
     showToast('Copied to clipboard!');
+  }
+}
+
+// Handle open link
+async function handleOpenLink(id) {
+  const clip = clips.find(c => c.id === id);
+  if (clip && clip.type === 'url') {
+    await window.electronAPI.openLink(clip.content);
   }
 }
 
@@ -539,7 +571,7 @@ function setupImageModal() {
   });
 
   imageModal.addEventListener('click', (e) => {
-    if (e.target === imageModal) {
+    if (e.target === imageModal || e.target === imageModalImg) {
       imageModal.classList.remove('show');
     }
   });

@@ -329,8 +329,10 @@
 
     .clipboard-item.selected {
       border-color: var(--accent);
-      border-left-color: var(--accent);
-      background: #f0f7ff;
+      border-left: 3px solid var(--accent);
+      background: linear-gradient(135deg, #e6f2ff 0%, #cce4ff 100%);
+      box-shadow: 0 3px 10px rgba(0, 122, 255, 0.2), 0 1px 3px rgba(0, 122, 255, 0.1);
+      transform: translateY(-1px);
     }
 
     .clipboard-item.pinned {
@@ -535,6 +537,10 @@
       color: var(--success);
     }
 
+    .item-action-btn.open-btn:hover {
+      color: var(--accent);
+    }
+
     .item-action-btn.delete-btn:hover {
       color: var(--danger);
     }
@@ -546,10 +552,9 @@
 
     /* Preview Panel - Compact */
     .preview-panel {
-      flex: 0 0 280px;
-      width: 280px;
+      flex: 1;
       min-width: 200px;
-      max-width: 500px;
+      max-width: 600px;
       background: var(--surface);
       border-left: 1px solid var(--border);
       display: flex;
@@ -599,7 +604,7 @@
       height: auto;
       border-radius: 6px;
       display: block;
-      cursor: default;
+      cursor: inherit;
     }
 
     .preview-text > .text-content {
@@ -661,17 +666,21 @@
     }
 
     .preview-btn:hover {
-      background: var(--bg);
-    }
-
-    .preview-btn.primary {
       background: var(--accent);
       border-color: var(--accent);
       color: #fff;
     }
 
+    .preview-btn.primary {
+      background: var(--surface);
+      border-color: var(--border);
+      color: var(--text);
+    }
+
     .preview-btn.primary:hover {
-      background: var(--accent-hover);
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
     }
 
     .preview-btn svg {
@@ -700,14 +709,14 @@
     /* Toast */
     .toast {
       position: fixed;
-      bottom: 60px;
+      top: 60px;
       left: 50%;
-      transform: translateX(-50%) translateY(10px);
+      transform: translateX(-50%) translateY(-10px);
       background: var(--text);
       color: #fff;
       padding: 8px 16px;
       border-radius: 6px;
-      font-size: 12px;
+      font-size: 13px;
       opacity: 0;
       transition: all 0.25s ease;
       z-index: 1000;
@@ -795,7 +804,7 @@
       height: auto;
       border-radius: 6px;
       display: block;
-      cursor: zoom-in;
+      cursor: pointer !important;
     }
 
     /* Image Modal Overlay */
@@ -1112,8 +1121,9 @@
       <div class="preview-footer">
         <button class="preview-btn" id="previewPin">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2L12 22"/>
-            <path d="M5 12l7-7 7 7"/>
+            <path d="M12 17v5"/>
+            <path d="M12 2a4 4 0 0 0-4 4v6l-3 3v1h14v-1l-3-3V6a4 4 0 0 0-4-4z"/>
+            <circle cx="12" cy="6" r="1"/>
           </svg>
           Pin
         </button>

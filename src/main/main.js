@@ -37,10 +37,10 @@ let lastClipboardImage = '';
 // Create the main application window
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    minWidth: 600,
-    minHeight: 400,
+    width: 1100,
+    height: 700,
+    minWidth: 800,
+    minHeight: 500,
     show: true,
     webPreferences: {
       nodeIntegration: false,
@@ -285,6 +285,12 @@ ipcMain.handle('get-storage-path', () => {
 ipcMain.handle('open-storage-folder', () => {
   const { shell } = require('electron');
   shell.showItemInFolder(store.path);
+});
+
+// Open link in browser
+ipcMain.handle('open-link', (event, url) => {
+  const { shell } = require('electron');
+  shell.openExternal(url);
 });
 
 // App lifecycle
