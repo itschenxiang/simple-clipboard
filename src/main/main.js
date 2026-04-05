@@ -20,6 +20,14 @@ const store = new Store({
   }
 });
 
+// Track if quit was initiated by user (dock/cmd+q) vs close button
+let willQuit = false;
+
+// Listen for quit initiation
+app.on('before-quit', () => {
+  willQuit = true;
+});
+
 let mainWindow = null;
 let clipboardWatcher = null;
 let lastClipboardContent = '';
@@ -41,6 +49,18 @@ function createWindow() {
   });
 
   mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
+
+  // Prevent window from being destroyed on close - just hide it (unless quitting)
+  mainWindow.on('close', (e) => {
+    if (!willQuit) {
+      e.preventDefault();
+      mainWindow.hide();
+    }
+  });
+
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
 
   log.info('Main window created');
 }
@@ -260,16 +280,16 @@ app.whenReady().then(() => {
   }
 });
 
-app.on('window-all-closed', () => {
-  app.quit();
-});
-
-app.on('before-quit', () => {
-  stopClipboardWatcher();
-});
+// Don't quit on macOS when all windows are closed - keep running in background
+// app.on('window-all-closed', () => {
+//   app.quit();
+// });
 
 app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.show();
+    mainWindow.focus();
+  } else {
     createWindow();
   }
 });
